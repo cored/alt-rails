@@ -1,29 +1,22 @@
-# The Drunk Architecture
-
-tldr; To continue a discussion that I had with Jeff at the holiday party.
+# Rails patterns from the wild
 
 ## Introduction
 
-Right now we don't have a proper set of guidelines that define our
-architecture. We did some work on that front with introducing the app/lib
-directory and all of the classes that we have there but even right now we can't
-share guidelines on how to start a feature or solve a particular bug. We need
-to start discussing those guidelines, one of the things that we need to realize
-is the fact that we outgrown Rails as a set of patterns to scale/evolve our
-code base. Rails is good for smaller applications but this is not the case
-anymore.
+This document outlines several patterns that had help me in the past to factor Rails applications. 
+This is not by any means the true and only way it is just what have work for me. There are several other good documents on the
+Internet talking about the same topics. I will try to update this document whenever I found a new pattern through my own 
+experimentations.
 
 ## Inspiration
 
-There are several resources that I took inspiration from to suggest some of the
-concepts that I want to expose here is the list of some of them:
+These are the resources that I took inspiration from in order to start with this document:
 
 - [Domain Driven Rails](https://vimeo.com/106759024)
 - [Seven Patterns to Refactor Fat ActiveRecord Models](http://blog.codeclimate.com/blog/2012/10/17/7-ways-to-decompose-fat-activerecord-models/)
 - [Domain Driven Design by Eric Evans](http://www.amazon.com/Domain-Driven-Design-Tackling-Complexity-Software/dp/0321125215)
 - [Hexagonal Architecture](http://alistair.cockburn.us/Hexagonal+architecture)
 - [Hexagonal Rails](https://www.youtube.com/watch?v=CGN4RFkhH2M)
-- [Lotus Framework](http://lotusrb.org/)
+- [Hanami Framework](http://hanamirb.org/)
 - [Decoupling from Rails](https://www.youtube.com/watch?v=tg5RFeSfBM4)
 - [Housetrip Engineering guidelines](https://github.com/HouseTrip/guidelines)
 
@@ -31,7 +24,12 @@ This is not the entire list but I think this is a good start.
 
 ## The problem
 
-My main issue with the actual code base is the speed of the test suite. You can
+The main goal of these patterns are not to solve the problem of slow test suites which I think can be solve with
+tools like spring or parallel testing. The main problem is the maintanability of code bases and for that there's need 
+to be consistent following of certain principles. Of course as with everything there are trade off to take into account 
+however if the goal of your team or project is to maintain a code base for a long time starting to think in problems related to  
+
+You can
 argue that we normally run the test suite in the CI but even if that's what's
 happening the slower feedback at development time will affect our understanding
 of what we are trying to solve. Removing the advantage of doing BDD/TDD in the
