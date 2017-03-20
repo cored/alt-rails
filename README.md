@@ -2,10 +2,9 @@
 
 ## Introduction
 
-This document outlines several patterns that had help me in the past to factor Rails applications. 
-This is not by any means the true and only way it is just what have work for me. There are several other good documents on the
-Internet talking about the same topics. I will try to update this document whenever I found a new pattern through my own 
-experimentations.
+This document outlines several patterns that helped me in the past in structuring Rails applications. 
+This is not by any means the true and only way to do such thing it is just what have work for me. 
+There are several other good documents on the Internet talking about same topics and I will encorage the reader to also compare. I will try to update this document whenever I found new patterns through my own experimentations and research.
 
 ## Inspiration
 
