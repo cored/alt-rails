@@ -8,16 +8,24 @@ There are several other good documents on the Internet talking about same topics
 
 ## Inspiration
 
-These are the resources that I took inspiration from in order to start with this document:
+### Talks
 
-- [Domain Driven Rails](https://vimeo.com/106759024)
-- [Seven Patterns to Refactor Fat ActiveRecord Models](http://blog.codeclimate.com/blog/2012/10/17/7-ways-to-decompose-fat-activerecord-models/)
-- [Domain Driven Design by Eric Evans](http://www.amazon.com/Domain-Driven-Design-Tackling-Complexity-Software/dp/0321125215)
-- [Hexagonal Architecture](http://alistair.cockburn.us/Hexagonal+architecture)
 - [Hexagonal Rails](https://www.youtube.com/watch?v=CGN4RFkhH2M)
-- [Hanami Framework](http://hanamirb.org/)
+- [Domain Driven Rails](https://vimeo.com/106759024)
 - [Decoupling from Rails](https://www.youtube.com/watch?v=tg5RFeSfBM4)
+
+### Articles
+
+- [Seven Patterns to Refactor Fat ActiveRecord Models](http://blog.codeclimate.com/blog/2012/10/17/7-ways-to-decompose-fat-activerecord-models/)
+- [Hexagonal Architecture](http://alistair.cockburn.us/Hexagonal+architecture)
+
+### Books
+- [Domain Driven Design by Eric Evans](http://www.amazon.com/Domain-Driven-Design-Tackling-Complexity-Software/dp/0321125215)
+
+### Others 
+
 - [Housetrip Engineering guidelines](https://github.com/HouseTrip/guidelines)
+- [Hanami Framework](http://hanamirb.org/)
 
 This is not the entire list but I think this is a good start.
 
