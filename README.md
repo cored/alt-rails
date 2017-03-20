@@ -13,6 +13,7 @@ There are several other good documents on the Internet talking about same topics
 - [Hexagonal Rails](https://www.youtube.com/watch?v=CGN4RFkhH2M)
 - [Domain Driven Rails](https://vimeo.com/106759024)
 - [Decoupling from Rails](https://www.youtube.com/watch?v=tg5RFeSfBM4)
+- [Architecture the lost years](https://www.youtube.com/watch?v=WpkDN78P884)
 
 ### Articles
 
@@ -32,59 +33,44 @@ This is not the entire list but I think this is a good start.
 ## The problem
 
 The main goal of these patterns are not to solve the problem of slow test suites which I think can be solve with
-tools like spring or parallel testing. The main problem is the maintanability of code bases and for that there's need 
-to be consistent following of certain principles. Of course as with everything there are trade off to take into account 
-however if the goal of your team or project is to maintain a code base for a long time starting to think in problems related to  
+tools like spring or parallel testing. The issues that this patterns try to focus on are related to improving the underlying architecture of a big Rails app to help with maintanibility and extensibility of such application.
 
-You can
-argue that we normally run the test suite in the CI but even if that's what's
-happening the slower feedback at development time will affect our understanding
-of what we are trying to solve. Removing the advantage of doing BDD/TDD in the
-first place. Getting to the point in which it's too painful to run the test
-suite then we already lost the battle even when the CI is helping us in that
-front. We maybe lost that battle but I don't think we lost the war entirely. On
-my research and with some experimentation I think I have some suggestions for
-us to discuss and to see if they can help us. I will to summarize them in here.
+Of course the document is not a guide on how to build any type of web applications. There are reasons to use the Rails way sometimes and the reader must be the decider on which approach to follow.
 
-Using this new concepts in the application will lead us to think that probably
-we are redoing Rails but actually we are not; we are just improving on what
-Rails provides. We need to remember that Rails is just a framework not a HCM
-platform.
+Using this new concepts in most application will lead us to think more in terms of the actual business domain and not about
+the implementation details of how we are deliverying data to an end user. Remember that Rails is just a delivery mechanism it doesn't come with any details about the business that we are trying to provide a solution for.
 
-## Use Case Objects / Interactors
+## Use Case 
 
-I added both names because to me they are no different. This objects are the
-entry point to our application they will represent a set of steps to do
+Of course we need an use case to define all this patterns in terms of that particular use case. It shouldn't be big though, however it should be complex enough to demostrate the benefits of these patterns. 
+
+
+## Use Case Objects / Interactors / Service Objects
+
+This objects are the entry point to our application they will represent a set of steps to do
 a particular business requirement:
 
 ```ruby
 module TimeOff
 	class RequestCreator
-		attr_reader :current_state, :request
-
-		include ::Policies::PolicyMixin
-		alias_method :policy_subject, :request
+		attr_reader :request
 
 		def initialize(
 			request_params,
 			request_day_params,
-			current_state,
+			company,
 			worker
 		)
 			@request_params = request_params.except(:id)
 			@request_day_params = request_day_params
-			@current_state = current_state
-			@company = current_state.company
+			@company = company
 			@worker = worker
 		end
 
 		def create
-			@request = company.time_off_requests.new(request_params)
+			@request = company.save_time_off_request_for(request_params)
 			request.set_request_days_from_params(request_day_params)
-			validate!
-			request.use_carryover if request.approved?
-			request.save!
-			worker.perform_async(
+						worker.perform_async(
 				:created,
 				request.id,
 				current_state.serialized
@@ -96,14 +82,6 @@ module TimeOff
 			::TimeOff::Presenters::Request.new(request, current_state)
 		end
 
-		def policies
-			[
-				::Policies::TimeOff::Enabled,
-				::Policies::TimeOff::CanRequest,
-				::Policies::TimeOff::CanRequestOnBehalfOf
-			]
-		end
-
 		private
 
 		attr_reader :request_params, :request_day_params, :company, :worker
@@ -111,7 +89,7 @@ module TimeOff
 end
 ```
 
-If we are going to solve any issue with a particular use case for the app we
+If we are going to solve any issue with a particular use case for the app we 
 will have just one place to look and solve it and not several in a lot of
 controllers across the app. Not just that we are going to be removing
 responsibilities from the controller which will lead to an easy to test
