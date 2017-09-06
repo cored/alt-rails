@@ -59,11 +59,7 @@ controllers, services objects, message queue wrappers, serializers) prefer
 make those calls in context dependent to a top level component.
 
 ```ruby
-class Shipment < ActiveRecord::Base>
-  def publish_to_queue(routing_key)
-    ::Hutch::Casper::Publisher.publish(routing_key, ShipmentSerializer.new(self).as_json)
-  end
-end
+# TODO: Add example
 ```
 
 * Avoid complex scopes (Use query objects instead)
@@ -72,15 +68,7 @@ end
   a particular view)
 
 ```ruby
-class Shipment < ActiveRecord::Base
-  def direct_shipment_serialized_with_order
-    order = Back2bed::Order.find_by(unique_order_number: order_number)
-    {
-      "shipment" => ShipmentSerializer.new(self, root: false).as_json,
-      "order" => Back2bed::OrderSerializer.new(order, root: false).as_json,
-    }
-  end
-end
+# TODO: Add example
 ```
 * Avoid concerns. Concerns or module mixins are another way of doing
   inheritance. The main purpose of that concept is for code specialization not
@@ -93,33 +81,13 @@ Use a form object when a set or one validation happens dependent of a context.
 A hint to find this out is when we use a conditional validation.
 
 ```ruby
-module Back2bed
-  class LineItem < Back2bed::ApplicationRecord
-    validates :trading_partner_variation_id, presence: true, if: :order_bulk_ship?
-  end
-end
-
+# TODO: Add example
 ```
 
 #### Suggested refactoring:
 
 ```ruby
-# /app/models/back2bed/line_item/as_order_bulk_ship.rb
-module Back2bed
-  class LineItem::AsOrderBulkShip < Dry::Struct
-    extend ActiveModel::Naming
-    include ActiveModel::Conversion
-    include ActiveModel::Validations
-
-    attribute :trading_partner_variation_id, Dry::Types["int"]
-
-    validates :trading_partner_variation_id, presence: true
-
-    def persisted?
-      false
-    end
-  end
-end
+# TODO: Add example
 ```
 
 ### Avoid private methods
@@ -129,67 +97,13 @@ to make all the active record models definitions as dump as possible in order
 for them to be flexible.
 
 ```ruby
-class Shipment < ActiveRecord::Base
-  unless Rails.env.production?
-    after_create :auto_ship, if: ->{ ENV["AUTO_SHIP_SHIPMENTS"].to_bool }
-  end
-
-  private
-
-    def auto_ship
-      Rails.logger.info "Shipment state for shipment ##{number} auto-updating to shipped, and assigning a warehouse"
-
-      #assign_shipment doesn't seem to work for multi-product shipments yet
-      #that seems like a bigger bug, just working around it for now
-      #Inventory::WarehouseAssigner.assign_shipment(self)
-      update!(warehouse: Warehouse.find_by_name("Fosdick"))
-
-      update!(status: 'shipped')
-
-      Rails.logger.info "To disable this feature set environment variable AUTO_SHIP_SHIPMENTS to false or remove it altogether."
-    end
-end
+# TODO: Add Example
 ```
 
 #### Suggested refactoring:
 
 ```ruby
-# app/service_objects/shipments/auto_ship.rb
-module Shipments
-  class AutoShip
-    def initialize(shipment_repository:, logger: Rails.logger)
-      @shipment_repository = shipment_repository
-      @logger = logger
-    end
-
-    def call(shipment_id)
-      if ENV.fetch("AUTO_SHIP_SHIPMENTS")
-        lookup_shipment_for(shipment_id)
-        logger.info "Shipment state for shipment ##{shipment.number} auto-updating to shipped, and assigning a warehouse"
-        shipment.add_to_warehouse!('Fosdick').shipped!
-        logger.info "To disable this feature set environment variable AUTO_SHIP_SHIPMENTS to false or remove it altogether."
-      end
-    end
-
-    private
-
-    def lookup_shipment_for(id)
-      @shipment ||= shipment_repository.find_by!(id)
-    end
-
-    attr_reader :shipment_repository, :logger, :shipment
-  end
-end
-
-class Shipment < ActiveRecord::Base
-  def shipped!
-    update!(status: 'shipped')
-  end
-
-  def add_to_warehouse!(name)
-    update!(warehouse: Warehouse.find_by_name(name))
-  end
-end
+# TODO: Example
 ```
 
 ### Avoid callbacks
@@ -198,42 +112,13 @@ Callbacks can create coupling between the record state life cycle instead let's
 be explicit about what needs to happen before/after any particular context.
 
 ```ruby
-class Shipment < ActiveRecord::Base
-  after_commit :infer_intended_ship_from_promised_arrival
-end
+# TODO: Example
 ```
 
 #### Suggested refactoring:
 
 ```ruby
-# app/service_objects/shipments/infer_intended_ship_from_promised_arrival.rb
-module Shipments
-  class InferIntendedShipFromPromisedArrival
-    def initialize(worker:)
-      @worker = worker
-    end
-
-    def call(shipment)
-      if shipment.previous_changes["warehouse_id"] || shipment.previous_changes["hold_for_arrival_on"]
-        if shipment.hold_for_arrival_on && shipment.warehouse
-          worker.perform_async(id)
-        else
-          shipment.remove_intended_ship_date
-        end
-      end
-    end
-
-    private
-
-    attr_reader :worker
-  end
-end
-
-class Shipment < ActiveRecord::Base >
-  def remove_intended_ship_date
-   update_column(:intended_ship_date, nil)
-  end
-end
+# TODO: Example
 ```
 
 ### Use query objects when defining complex scopes
@@ -245,40 +130,13 @@ business logic. Also use query objects when you need to use `SQL`.
 
 
 ```ruby
-class Shipment < ActiveRecord::Base
-  scope :non_easy_post_trackable, -> do
-    where(easy_post_shipment_id: nil).
-      joins(carrier_service_option: :carrier).
-      where("carriers.type" => UpdateTrackingInfoWorker::NON_EASY_POST_TRACKABLE_CARRIERS)
-  end
-end
+# TODO: Example
 ```
 
 #### Suggested refactoring:
 
 ```ruby
-# /app/models/shipments/non_easy_post_trackable.rb
-module Shipments
-  class NonEasyPostTrackable
-    def initialize(relation = Shipment.all)
-      @relation = relation
-    end
-
-    def call
-      relation.where(easy_post_shipment_id: nil).
-        joins(carrier_service_option: :carrier).
-        where("carriers.type" => UpdateTrackingInfoWorker::NON_EASY_POST_TRACKABLE_CARRIERS)
-    end
-
-    private
-
-    attr_reader :relation
-  end
-end
-
-class Shipment < ActiveRecord::Base
-  scope :non_easy_post_trackable, Shipments::NonEasyPostTrackable.new
-end
+# TODO: Example
 ```
 
 The advantages of defining query objects in this way is that Rails will
@@ -290,36 +148,13 @@ directory and the `Shipment` model spec.
 ### Value objects
 
 ```ruby
-class Address < ActiveRecord::Base
-  def display_name
-    warehouse ? warehouse.display_name : full_name
-  end
-end
+# TODO: Example
 ```
 
 #### Suggested refactoring:
 
 ```ruby
-class Address < ActiveRecord::Base
-  def display_name
-    Addressess::DisplayName.for(self).to_s
-  end
-end
-
-# app/service_objects/addresses/display_name.rb
-module Addresses
-  class DisplayName < Dry::Struct
-    def self.for(address)
-      new(name: (warehouse ? warehouse.display_name : full_name)).to_s
-    end
-
-    attribute :name, Dry::Types::Coarse['string']
-
-    def to_s
-      "#{name}"
-    end
-  end
-end
+# TODO: Example
 ```
 
 The use of [dry-types](http://dry-rb.org/gems/dry-types/) will give us the advantage of type coercion and also documentation
@@ -331,18 +166,7 @@ View models normally would be transformation returned by service objects that
 will provide all the view logic needed to display data in an UI.
 
 ```ruby
-# app/services_objects/addresses/view_models/address.rb
-module Addresses
-  module ViewModels
-    class Address
-      def self.for(address)
-        new(name: (warehouse ? warehouse.display_name : full_name)).to_s
-      end
-
-      attribute :name, Dry::Types::Coarse['string']
-    end
-  end
-end
+# TODO: Example
 ```
 
 Often than not you will prefer value objects to carry most display logic. Use
@@ -365,12 +189,7 @@ follow while testing.
   those methods)
 
 ```ruby
-  # Do not test this
-  it "doesn't allow updates" do
-    address = create(:address)
-    expect(address.update_attributes(address1: address.address1 + ' Apt 5')).to eq(false)
-    expect(address.errors[:base][0]).to include("update")
-  end
+# TODO: Example
 ```
 
 Since we are going to be pushing most complex logic to the higher level
