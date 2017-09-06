@@ -34,7 +34,7 @@ Remember that Rails is just a delivery mechanism - it doesn't come with any deta
 
 ## Guides
 
-[ActiveRecord](https://github.com/CasperSleep/BedtimeStories/blob/master/active_record.md)
+[ActiveRecord](https://github.com/cored/rails-apps-patterns/blob/master/active_record.md)
 
 ## TODO
 
