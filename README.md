@@ -1,4 +1,4 @@
-# Bedtime Stories
+# Rails Architectural Patterns
 
 Guides for developing web applications using Ruby on Rails.
 
@@ -35,6 +35,12 @@ Remember that Rails is just a delivery mechanism - it doesn't come with any deta
 ## Guides
 
 [ActiveRecord](https://github.com/CasperSleep/BedtimeStories/blob/master/active_record.md)
+
+## TODO
+
+* RESTful controllers guide
+* Service Objects guide
+* TDD Workflow guide
 
 ## Inspiration
 
