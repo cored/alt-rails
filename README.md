@@ -66,6 +66,7 @@ Remember that Rails is just a delivery mechanism - it doesn't come with any deta
 - [Implementing domain driven design](https://www.amazon.com/Implementing-Domain-Driven-Design-Vaughn-Vernon/dp/0321834577/ref=sr_1_1?ie=UTF8&qid=1498666274&sr=8-1&keywords=implementing+domain+driven+design)
 - [Growing Rails applications in practice](https://pragprog.com/book/d-kegrap/growing-rails-applications-in-practice)
 - [Fearless refactoring Rails controllers](http://rails-refactoring.com/)
+- [Domain Driven Rails](http://blog.arkency.com/domain-driven-rails/)
 
 ### Others
 
