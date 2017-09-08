@@ -217,6 +217,9 @@ end
 ## Resources
 
 [Delegating to query objects through active record scopes](http://craftingruby.com/posts/2015/06/29/query-objects-through-scopes.html)
+
 [7 patterns to refactor fat active record models](http://blog.codeclimate.com/blog/2012/10/17/7-ways-to-decompose-fat-activerecord-models/)
+
 [Growing Rails applications in practice](https://pragprog.com/book/d-kegrap/growing-rails-applications-in-practice)
+
 [Active record spec helper](https://gist.github.com/coreyhaines/2068977)
