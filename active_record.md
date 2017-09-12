@@ -55,20 +55,52 @@ apps
 * Private methods (Use value objects, service objects to extract the logic)
 * Callbacks (Do the operation per context to reduce coupling)
 * Avoid calls to objects outside of the persistence layer (workers, views,
-controllers, services objects, message queue wrappers, serializers) prefer
-make those calls in context dependent to a top level component.
-
+controllers, services objects, message queue wrappers, serializers) prefer to
+make those calls in context dependent to a top level component. 
 ```ruby
-# TODO: Add example
+class User < ActiveRecord::Base
+   # Avoid
+   def publish_user_info(key) 
+      ::Hutch::Publisher.publish(key, UserSerializer.new(self).as_json)
+   end
+end
 ```
-
 * Avoid complex scopes (Use query objects instead)
 * Do not add wrapper methods for display purposes; use value objects if it's
   needed in a lot of places or view models for doing a transformation for
-  a particular view)
+  a particular model)
 
 ```ruby
-# TODO: Add example
+class User < ActiveRecord::Base 
+  # Avoid
+  def full_info 
+     {
+        profile: ProfileSerializer.new(profile), 
+        user: UserSerializer.new(self)
+     }
+  end
+end
+
+# Possible refactor: 
+class Users::WithFullInfo
+   def initialize(user:, profile_serializer: ProfileSeralizer, user_serializer: UserSerializer) 
+     @user = user
+     @profile_serializer = profile_serializer
+     @user_serializer = user_serializer 
+   end 
+   
+   def to_h
+     {
+       profile: profile_serializer.new(user.profile), 
+       user: user_serializer.new(user)
+     }
+   end
+   
+   private 
+   
+   attr_reader :user, ;profile_serializer, :user_serializer
+end
+   
 ```
 * Avoid concerns. Concerns or module mixins are another way of doing
   inheritance. The main purpose of that concept is for code specialization not
