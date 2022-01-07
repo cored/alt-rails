@@ -34,7 +34,7 @@ The fundamental truth of software development is that code is subject to change 
 
 The purpose of Software Architecture is to make a structure that enables flexibility.
 
-> The primary purpose of architecture is to support the life cycle of the system.*Location 1928*[^1]
+> The primary purpose of architecture is to support the life cycle of the system.[^1]
 
 The one practical aspect that reveals the health of a code-base is 'how easy it is to change it.'
 
