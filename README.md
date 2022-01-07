@@ -25,3 +25,34 @@
 
 4. Realize that tools are great but what matters are principles and knowledge
 > The best tools encourage the adoption of good Software Engineering principles.
+
+## ALT Rails Way
+
+Applications exist to support a Business Domain.
+
+The fundamental truth of software development is that code is subject to change - all the time.
+
+The purpose of Software Architecture is to make a structure that enables flexibility.
+
+> The primary purpose of architecture is to support the life cycle of the system.*Location 1928*[^1]
+
+The one practical aspect that reveals the health of a code-base is 'how easy it is to change it.'
+
+Frameworks architecture is about the tool, not the business. Software Architecture is the structure given to a system by its builders.
+
+> The architecture of a software system is the shape given to that system by those who build it[^1]
+
+Developers drive the shape of a system while introducing new features to a plan.  
+
+The final structure, thus, supports operational business processes. 
+
+The architecture of frameworks describes the structure of that system.
+
+> Architectures are not (or should not be) about frameworks. Frameworks should not supply architectures.[^1]
+
+## References
+
+[^1]: [[Robert C. Martin]] (2018): *Clean architecture: a craftsman's guide to software structure and design*(https://www.amazon.com/Clean-Architecture-Craftsmans-Software-Structure-ebook-dp-B075LRM681/dp/B075LRM681/ref=mt_other?_encoding=UTF8&me=&qid=)
+
+
+
