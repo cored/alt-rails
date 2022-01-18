@@ -65,8 +65,8 @@ The final structure, thus, supports operational business processes. In other wor
 
 ## References
 
-* [^1]: [Robert C. Martin] (2018): *Clean architecture: a craftsman's guide to software structure and design*(https://www.amazon.com/Clean-Architecture-Craftsmans-Software-Structure-ebook-dp-B075LRM681/dp/B075LRM681/ref=mt_other?_encoding=UTF8&me=&qid=)
-* [^2]: [Anthony Eden] (2021): *10 Years In - The Realities of Running a Rails App Long Term - Anthony Eden*(https://youtube.com/watch?v=Xd41xwQNYbY&t=289)
+[^1]: [Robert C. Martin] (2018): *Clean architecture: a craftsman's guide to software structure and design*(https://www.amazon.com/Clean-Architecture-Craftsmans-Software-Structure-ebook-dp-B075LRM681/dp/B075LRM681/ref=mt_other?_encoding=UTF8&me=&qid=)
+[^2]: [Anthony Eden] (2021): *10 Years In - The Realities of Running a Rails App Long Term - Anthony Eden*(https://youtube.com/watch?v=Xd41xwQNYbY&t=289)
 
 
 
