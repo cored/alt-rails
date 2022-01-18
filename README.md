@@ -48,15 +48,11 @@ There is a big gap between *MVC*, which describes a web-application structure, a
 
 > In object-oriented programming, a God object (sometimes also called an Omniscient or All-knowing object) is an object that references a large number of distinct types, has too many unrelated or uncategorized methods, or some combination of both. 
 
-*God objects* are hard to evolve because they are hard to test.
-
-> Another item that comes up is that they're hard to evolve because of all these complex interactions between different methods inside of these God objects [^2]
+*God objects* are hard to evolve because they are hard to test. Another item that comes up is that they're hard to evolve because of all these complex interactions between different methods inside of God objects.
 
 ### Evolving a Software Architecture
 
-> The architecture of a software system is the shape given to that system by those who build it[^1]
-
-Developers drive the shape of a system while introducing new features to a plan.
+The architecture of a software system is the shape given to that system by those who build it. Developers drive the shape of a system while introducing new features to a plan.
 
 The final structure, thus, supports operational business processes. In other words, it is not possible to suggest a pre-defined design that will fit every project.
 
@@ -65,8 +61,8 @@ The final structure, thus, supports operational business processes. In other wor
 
 ## References
 
-[^1]: [Robert C. Martin] (2018): *Clean architecture: a craftsman's guide to software structure and design*(https://www.amazon.com/Clean-Architecture-Craftsmans-Software-Structure-ebook-dp-B075LRM681/dp/B075LRM681/ref=mt_other?_encoding=UTF8&me=&qid=)
-[^2]: [Anthony Eden] (2021): *10 Years In - The Realities of Running a Rails App Long Term - Anthony Eden*(https://youtube.com/watch?v=Xd41xwQNYbY&t=289)
+* [Robert C. Martin] (2018): *Clean architecture: a craftsman's guide to software structure and design*(https://www.amazon.com/Clean-Architecture-Craftsmans-Software-Structure-ebook-dp-B075LRM681/dp/B075LRM681/ref=mt_other?_encoding=UTF8&me=&qid=)
+* [Anthony Eden] (2021): *10 Years In - The Realities of Running a Rails App Long Term - Anthony Eden*(https://youtube.com/watch?v=Xd41xwQNYbY&t=289)
 
 
 
